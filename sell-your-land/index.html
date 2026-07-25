@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sell Your Land — Cash Offer</title>
+<meta name="description" content="We buy vacant lots directly from owners. No agents, no listings, no fees. Tell us about your property and we'll reach out with a straightforward cash offer." />
+<style>
+  /* This page is deliberately standalone — it does not share the dark app
+     theme. It is the Twilio/carrier "proof of consent" page and must stay
+     readable, plain, and obviously a consent form. */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #f8fafc; color: #0f172a;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 32px 20px 64px; }
+  header { margin-bottom: 28px; }
+  .brand { font-weight: 800; font-size: 20px; color: #166534; }
+  h1 { font-size: 30px; font-weight: 800; line-height: 1.15; margin: 0 0 12px; }
+  .lede { font-size: 16px; color: #334155; margin: 0 0 24px; }
+  form { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; }
+  .field { margin-bottom: 14px; }
+  label.lbl { display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 5px; }
+  input[type=text], input[type=tel], input[type=email] {
+    width: 100%; border: 1px solid #cbd5e1; border-radius: 8px;
+    padding: 10px 12px; font-size: 15px; font-family: inherit;
+  }
+  .consent {
+    display: flex; gap: 10px; align-items: flex-start;
+    margin: 4px 0 16px; font-size: 13px; color: #334155;
+  }
+  .consent input { margin-top: 3px; }
+  .hp { position: absolute; left: -9999px; top: -9999px; }
+  button {
+    width: 100%; background: #166534; color: #fff; font-weight: 700; font-size: 15px;
+    border: none; border-radius: 10px; padding: 12px; cursor: pointer; font-family: inherit;
+  }
+  button[disabled] { opacity: .6; cursor: default; }
+  .fineprint { font-size: 11px; color: #64748b; margin: 10px 0 0; text-align: center; }
+  .error {
+    background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b;
+    border-radius: 8px; padding: 8px 12px; font-size: 13px; margin-bottom: 12px;
+  }
+  .success { background: #dcfce7; border: 1px solid #86efac; border-radius: 12px; padding: 20px; }
+  .success h2 { margin: 0 0 6px; font-size: 18px; font-weight: 700; color: #166534; }
+  .success p { margin: 0; color: #166534; }
+  #privacy { margin-top: 40px; font-size: 13px; color: #475569; line-height: 1.6; }
+  #privacy h2 { font-size: 16px; font-weight: 700; color: #0f172a; margin: 0 0 8px; }
+  #privacy ul { margin: 0 0 10px; padding-left: 18px; }
+  #privacy p { margin: 0 0 10px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="brand" data-business-name>Talkstudio Land</div></header>
+
+  <h1>Sell your vacant land — fast, simple, cash.</h1>
+  <p class="lede">
+    We buy vacant lots directly from owners. No agents, no listings, no fees or commissions —
+    you sell as-is and we cover the closing costs. Tell us about your property and we'll reach out
+    with a straightforward cash offer.
+  </p>
+
+  <div class="success" id="done" hidden>
+    <h2>Thank you!</h2>
+    <p>
+      We've got your information and will be in touch shortly. You can reply <strong>STOP</strong> to
+      any text to opt out at any time, or <strong>HELP</strong> for help.
+    </p>
+  </div>
+
+  <form id="form">
+    <div class="field">
+      <label class="lbl" for="name">Full name *</label>
+      <input type="text" id="name" name="name" autocomplete="name" />
+    </div>
+    <div class="field">
+      <label class="lbl" for="phone">Phone number *</label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 123-4567" />
+    </div>
+    <div class="field">
+      <label class="lbl" for="email">Email (optional)</label>
+      <input type="email" id="email" name="email" autocomplete="email" />
+    </div>
+    <div class="field">
+      <label class="lbl" for="propertyLocation">Where is the land? (county, city, or parcel — optional)</label>
+      <input type="text" id="propertyLocation" name="propertyLocation" />
+    </div>
+
+    <!-- Honeypot — hidden from humans, bots tend to fill it. -->
+    <div class="hp" aria-hidden="true">
+      <label>Company<input type="text" id="company" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <label class="consent">
+      <input type="checkbox" id="consent" />
+      <span id="consent-text"></span>
+    </label>
+
+    <div class="error" id="error" hidden></div>
+
+    <button type="submit" id="submit">Get my cash offer</button>
+    <p class="fineprint">
+      By submitting, you agree to the Messaging Terms &amp; Privacy below. Consent is not a condition of any purchase.
+    </p>
+  </form>
+
+  <!-- Messaging Terms & Privacy — this same URL doubles as the privacy /
+       terms link for toll-free registration. -->
+  <section id="privacy">
+    <h2>Messaging Terms &amp; Privacy</h2>
+    <p>
+      By providing your phone number and checking the consent box, you agree to receive text messages
+      from <span data-business-name>Talkstudio Land</span> about buying your land at the number provided,
+      including messages sent using automated technology. Consent is not a condition of any purchase.
+    </p>
+    <ul>
+      <li>Message frequency varies.</li>
+      <li>Message and data rates may apply.</li>
+      <li>Reply <strong>STOP</strong> at any time to unsubscribe. Reply <strong>HELP</strong> for help.</li>
+      <li>We do <strong>not</strong> sell, rent, or share your phone number or opt-in information with third
+          parties or affiliates for their own marketing purposes.</li>
+    </ul>
+    <p>
+      We use the information you submit only to contact you about your property and a potential purchase.
+      To opt out at any time, reply STOP to a text or contact us below.
+    </p>
+    <p>
+      <strong data-business-name>Talkstudio Land</strong> ·
+      <span data-business-phone>(000) 000-0000</span> ·
+      <span data-business-email>tom@talkstudio.space</span>
+    </p>
+  </section>
+</div>
+
+<script src="/assets/config.js"></script>
+<script src="/assets/opt-in.js"></script>
+</body>
+</html>
