@@ -6,9 +6,9 @@
 // shipped here are still placeholders carried over from the original page.
 window.SITE_CONFIG = {
   business: {
-    name: 'Talkstudio Land',        // <-- set your real registered business name
-    phone: '(000) 000-0000',        // <-- set your real contact number
-    email: 'tom@talkstudio.space',  // <-- set your real contact email
+    name: 'Talk Studio LLC',
+    phone: '(650) 517-3366',
+    email: 'support@talkstudio.space',
   },
 
   // Where the opt-in POST goes. This is the public API only — nothing
