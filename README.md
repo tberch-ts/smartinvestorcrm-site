@@ -12,8 +12,10 @@ repo, and only what genuinely has to be world-readable lives here.
 |---|---|
 | `index.html` | Marketing landing page |
 | `sell-your-land/index.html` | **Public SMS opt-in / consent page** — the "proof of consent" URL for Twilio toll-free verification, and the messaging terms & privacy page |
-| `assets/style.css` | All styling (no framework, no build step) |
+| `assets/style.css` | All styling — the Nocturne token sheet plus the page's own classes (no framework, no build step) |
 | `assets/config.js` | Business name, contact details, API URL — **the only file you normally edit** |
+| `assets/story.js` | The scroll-driven four-act pipeline animation on the landing page |
+| `assets/survey.js` | The "Find your fit" survey — seven steps, derived result, `POST /api/leads` |
 | `assets/opt-in.js` | Opt-in form logic |
 | `404.html` | Not-found page |
 | `CNAME` | Custom domain for GitHub Pages |
@@ -34,19 +36,23 @@ parties. Never add:
 If a change here needs data from the app, it goes through the public API
 (`/api/opt-in`), not through committed files.
 
-## ⚠️ Before submitting to Twilio
+## Before submitting to Twilio
 
-`assets/config.js` still contains **placeholder** business details:
+Business details live in `assets/config.js`:
 
 ```js
-name:  'Talkstudio Land',       // <-- not verified as your real business name
-phone: '(000) 000-0000',        // <-- placeholder
+name:  'TalkStudio LLC',
+phone: '650-517-3366',
 email: 'tom@talkstudio.space',
 ```
 
-The business name, phone, and email must match your toll-free registration and
-the business name used in your sample messages **exactly**, or verification is
-rejected. Update `config.js` and redeploy before submitting the URL.
+These must match your toll-free registration and the business name used in your
+sample messages **exactly**, or verification is rejected. If you change the
+registration, change this file too.
+
+Note that `name` is interpolated into the SMS consent sentence stored with every
+opt-in record, so editing it changes the language future consenters agree to.
+Existing records keep the text that was shown at the time.
 
 The page satisfies the carrier consent requirements: explicit checkbox (not
 pre-checked), full consent language shown next to it, "consent is not a
@@ -61,8 +67,9 @@ Any static file server works. For example:
 python -m http.server 4173
 ```
 
-Then open `http://localhost:4173`. Note that the opt-in form POSTs to the live
-API — don't submit test data unless you intend to create a real consent record.
+Then open `http://localhost:4173`. Note that both forms POST to the live API —
+the opt-in form creates a real consent record, and the landing page's survey
+creates a real lead. Don't submit test data unless you mean to.
 
 ## Deployment
 

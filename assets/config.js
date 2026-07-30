@@ -1,9 +1,10 @@
 // Site configuration — the ONLY file you need to edit for business details.
 //
-// ⚠️ REQUIRED BEFORE TWILIO SUBMISSION ⚠️
-// The name, phone, and email below must match your toll-free registration
-// and the business name used in your sample messages, exactly. The values
-// shipped here are still placeholders carried over from the original page.
+// These values must match your toll-free registration and the business name
+// used in your sample messages, EXACTLY. Carriers reject verification on a
+// mismatch, and the name here also flows into the SMS consent text that gets
+// stored with every opt-in record — so changing it changes what people agreed
+// to. Keep it in sync with the registration.
 window.SITE_CONFIG = {
   business: {
     name: 'Talk Studio LLC',
