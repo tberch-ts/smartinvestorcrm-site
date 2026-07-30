@@ -482,14 +482,27 @@
       <a href="/sell-your-land">Sell your land</a>
     </div>
     <p class="legal">
-      &copy; <span id="year">2026</span> SmartInvestorCRM &middot; General education only, not legal or financial advice.
+      &copy; <span id="year">2026</span> SmartInvestorCRM &middot; a <span data-business-name>Talk Studio LLC</span> production
+      &middot; General education only, not legal or financial advice.
       Payments via Stripe &middot; Auth via Firebase.
     </p>
   </div>
 </footer>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 <script src="/assets/config.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  // The footer credit reads the legal entity name out of config.js rather
+  // than hardcoding it, so it can't drift from the name in the SMS consent
+  // sentence or the toll-free registration. Same [data-business-name] hook
+  // the opt-in page uses. Runs after config.js, which defines SITE_CONFIG.
+  (function () {
+    var name = window.SITE_CONFIG && window.SITE_CONFIG.business && window.SITE_CONFIG.business.name;
+    if (!name) return;
+    var nodes = document.querySelectorAll('[data-business-name]');
+    for (var i = 0; i < nodes.length; i++) nodes[i].textContent = name;
+  })();
+</script>
 <script src="/assets/story.js"></script>
 <script src="/assets/survey.js"></script>
 </body>
