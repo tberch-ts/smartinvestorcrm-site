@@ -32,6 +32,7 @@
     margin: 4px 0 16px; font-size: 13px; color: #334155;
   }
   .consent input { margin-top: 3px; }
+  .optnote { font-size: 12px; color: #64748b; margin: -8px 0 16px 26px; }
   .hp { position: absolute; left: -9999px; top: -9999px; }
   button {
     width: 100%; background: #166534; color: #fff; font-weight: 700; font-size: 15px;
@@ -66,9 +67,10 @@
 
   <div class="success" id="done" hidden>
     <h2>Thank you!</h2>
-    <p>
-      We've got your information and will be in touch shortly. You can reply <strong>STOP</strong> to
-      any text to opt out at any time, or <strong>HELP</strong> for help.
+    <p>We've got your information and will be in touch shortly.</p>
+    <p id="done-sms" hidden>
+      You can reply <strong>STOP</strong> to any text to opt out at any time, or
+      <strong>HELP</strong> for help.
     </p>
   </div>
 
@@ -95,16 +97,23 @@
       <label>Company<input type="text" id="company" tabindex="-1" autocomplete="off" /></label>
     </div>
 
+    <!-- Optional by design. Carriers reject an opt-in workflow where SMS
+         consent is required to use the form (Twilio error 30505). -->
     <label class="consent">
       <input type="checkbox" id="consent" />
-      <span id="consent-text"></span>
+      <span><strong>Text messages (optional).</strong> <span id="consent-text"></span></span>
     </label>
+    <p class="optnote">
+      This box is optional. Leave it unchecked and we'll still send your cash offer — we'll
+      reach out by phone or email instead.
+    </p>
 
     <div class="error" id="error" hidden></div>
 
     <button type="submit" id="submit">Get my cash offer</button>
     <p class="fineprint">
-      By submitting, you agree to the Messaging Terms &amp; Privacy below. Consent is not a condition of any purchase.
+      Consent to receive texts is optional and is not a condition of any purchase or of submitting
+      this form. See Messaging Terms &amp; Privacy below.
     </p>
   </form>
 

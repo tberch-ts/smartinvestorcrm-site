@@ -41,9 +41,13 @@
     var company = document.getElementById('company').value.trim();
     var consent = document.getElementById('consent').checked;
 
+    // SMS consent is deliberately NOT required to submit. Carriers reject an
+    // opt-in workflow where agreeing to texts is a condition of using the
+    // form (Twilio error 30505: "Opt-in must be optional, not required").
+    // The lead is accepted either way; only a checked box creates an SMS
+    // consent record.
     if (!name) return showError('Please enter your name.');
     if (!phone) return showError('Please enter your phone number.');
-    if (!consent) return showError('Please check the box to agree to receive text messages.');
 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
@@ -56,8 +60,8 @@
         phone: phone,
         email: email || undefined,
         propertyLocation: propertyLocation || undefined,
-        consent: true,
-        consentText: CONSENT_TEXT,
+        consent: consent,
+        consentText: consent ? CONSENT_TEXT : undefined,
         company: company || undefined,
       }),
     })
@@ -69,6 +73,8 @@
         }
         form.hidden = true;
         doneBox.hidden = false;
+        // Only promise texts to someone who actually opted in.
+        document.getElementById('done-sms').hidden = !consent;
       })
       .catch(function (err) {
         showError(err.message);
