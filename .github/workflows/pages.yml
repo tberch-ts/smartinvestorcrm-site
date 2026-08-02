@@ -1,0 +1,47 @@
+# Deploys this static site to GitHub Pages.
+#
+# This replaces the legacy "Deploy from a branch" managed builder with a
+# workflow that lives in the repo, so the deploy pipeline is code you control
+# and can keep current. There is no build step — the site is plain HTML/CSS/JS,
+# so the whole repo root is uploaded as-is (the CNAME file preserves the
+# smartinvestorcrm.com custom domain).
+#
+# REQUIRED SETTING: Pages Source must be set to "GitHub Actions"
+# (Settings -> Pages -> Build and deployment -> Source). Until it is, the
+# deploy step cannot publish.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Least-privilege token plus the OIDC id-token the deploy needs.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it mid-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
