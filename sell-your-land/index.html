@@ -18,6 +18,11 @@
   .wrap { max-width: 620px; margin: 0 auto; padding: 32px 20px 64px; }
   header { margin-bottom: 28px; }
   .brand { font-weight: 800; font-size: 20px; color: #166534; }
+  .tagline { font-size: 13px; color: #64748b; margin-top: 2px; }
+  .operator {
+    font-size: 12px; color: #475569; background: #f1f5f9;
+    border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; margin: 0 0 24px;
+  }
   h1 { font-size: 30px; font-weight: 800; line-height: 1.15; margin: 0 0 12px; }
   .lede { font-size: 16px; color: #334155; margin: 0 0 24px; }
   form { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; }
@@ -57,13 +62,22 @@
 </head>
 <body>
 <div class="wrap">
-  <header><div class="brand" data-business-name>Talk Studio LLC</div></header>
+  <header>
+    <div class="brand" data-business-name>Talk Studio LLC</div>
+    <div class="tagline">Cash offers for vacant land, direct from the buyer.</div>
+  </header>
 
   <h1>Sell your vacant land — fast, simple, cash.</h1>
   <p class="lede">
-    We buy vacant lots directly from owners. No agents, no listings, no fees or commissions —
-    you sell as-is and we cover the closing costs. Tell us about your property and we'll reach out
-    with a straightforward cash offer.
+    <strong data-business-name>Talk Studio LLC</strong> buys vacant lots directly from owners. No agents,
+    no listings, no fees or commissions — you sell as-is and we cover the closing costs. Tell us about your
+    property and we'll reach out with a straightforward cash offer.
+  </p>
+
+  <p class="operator">
+    This land-buying service is operated by <strong data-business-name>Talk Studio LLC</strong>.
+    Talk Studio LLC also operates SmartInvestorCRM, a separate software product hosted on this domain —
+    both are the same company. Any text messages you receive come from Talk Studio LLC about your land.
   </p>
 
   <div class="success" id="done" hidden>
