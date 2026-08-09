@@ -12,7 +12,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SmartInvestorCRM — The deal was already in the public record</title>
-<meta name="description" content="County assessors, the Census, HUD and BLS refresh the public record constantly. SmartInvestorCRM reads it — every block in every market we cover, scored 0–100 and never more than a day old — then hands you the one address worth your Tuesday with the underwriting run and the LOI drafted." />
+<meta name="description" content="County assessors, the Census, HUD and BLS refresh the public record constantly. SmartInvestorCRM reads it — every block in Denver, Phoenix, Nashville, Charlotte, Raleigh and Tampa, scored 0–100 and never more than a day old — then hands you the one address worth your Tuesday with the underwriting run and the LOI drafted." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="/assets/style.css" />
@@ -53,9 +53,9 @@
 <section class="hero" id="top">
   <div class="glow"></div>
   <div class="col">
-    <div class="kicker">Every market we cover · scored daily</div>
+    <div class="kicker">6 metros scored daily · 22 markets covered</div>
     <h1>The deal was already in the public record.</h1>
-    <p class="lede">County assessors, the Census, HUD and BLS refresh it constantly. Nobody reads it. We read every block in every market we cover &mdash; scored 0&ndash;100, never more than a day old &mdash; then hand you the one address worth your Tuesday, underwriting run and LOI drafted.</p>
+    <p class="lede">County assessors, the Census, HUD and BLS refresh it constantly. Nobody reads it. We read every block in Denver, Phoenix, Nashville, Charlotte, Raleigh and Tampa &mdash; scored 0&ndash;100, never more than a day old &mdash; then hand you the one address worth your Tuesday, underwriting run and LOI drafted.</p>
     <div class="ctas">
       <a class="btn btn-primary btn-lg" href="#fit">Find your fit in 60 seconds
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg>
@@ -358,7 +358,7 @@
     <p class="dek">The data that scored the block populates the underwriting. The underwriting populates the LOI. The LOI moves the pipeline. Nothing gets exported to a spreadsheet and lost.</p>
     <div class="tool-grid">
       <div class="card elev-sm"><p class="card-kicker">Scoring</p><p class="card-title">Deal scoring engine</p><p class="card-body">A weighted 0&ndash;100 on every area and every deal, blending public data with cap rate, DSCR and cash-on-cash. Sort by score; the upside floats.</p></div>
-      <div class="card elev-sm"><p class="card-kicker">Sourcing</p><p class="card-title">Hotspot map</p><p class="card-body">Every neighborhood in every market we cover, rated by income, rent, density and rent burden. Click a zone, get the property candidates inside it.</p></div>
+      <div class="card elev-sm"><p class="card-kicker">Sourcing</p><p class="card-title">Hotspot map</p><p class="card-body">Every neighborhood in our live-scored metros, rated by income, rent, density and rent burden. Click a zone, get the property candidates inside it.</p></div>
       <div class="card elev-sm"><p class="card-kicker">Sourcing</p><p class="card-title">Property search</p><p class="card-body">Any address in your market: assessed value, unit count, lot size, year built, zoning. No county portal logins.</p></div>
       <div class="card elev-sm"><p class="card-kicker">Macro</p><p class="card-title">Market intel</p><p class="card-body">Local employment, income, crime and landlord climate per metro, live from BLS, the Census and FBI. Know whose market it is this week.</p></div>
       <div class="card elev-sm"><p class="card-kicker">Analysis</p><p class="card-title">Underwriting calculator</p><p class="card-body">Full Year-1 pro-forma in one form — cap rate, NOI, DSCR, CoC, break-even occupancy. Saves straight to the deal record.</p></div>
@@ -373,11 +373,13 @@
 
 <section class="band">
   <div class="grid">
-    <!-- Market count is the live total from the API market registry (MARKETS
-         in apps/api/src/config/markets.ts). Bump this when coverage changes.
-         To auto-sync it, add a public no-auth GET returning the count and fetch
-         it here — /api/markets itself is behind the auth gate. -->
-    <div><p class="fig">22</p><p class="cap">markets scored daily</p></div>
+    <!-- Two distinct numbers, kept separate on purpose:
+         • 6  = metros with live area-scoring / hotspot map (must match the
+                "Live markets" chips above and the coverage FAQ answer).
+         • 22 = markets the platform covers for search / land / leads (the
+                MARKETS registry in apps/api/src/config/markets.ts).
+         Bump each when coverage changes; do not merge them into one "scored". -->
+    <div><p class="fig">6</p><p class="cap">metros scored &middot; 22 markets covered</p></div>
     <div><p class="fig">2,400+</p><p class="cap">census tracts rated 0&ndash;100</p></div>
     <div><p class="fig">10</p><p class="cap">tools on one deal record</p></div>
     <div><p class="fig">$0</p><p class="cap">to run your first deal end to end</p></div>
