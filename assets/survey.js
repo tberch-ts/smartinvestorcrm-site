@@ -53,10 +53,14 @@
      The payoff panel, and the shape of the account we go on to create. */
   function derive() {
     var a = answers;
+    // Multifamily is the core asset class here — unit count, cap rate, DSCR,
+    // LP capital, the syndication course. Land and tax liens are the
+    // low-capital on-ramp to it, not a separate destination, so every track
+    // names multifamily instead of leaving it to the funded-buyer branch.
     var track_ =
-      a.role === 'Seller' ? 'Land disposition'
-      : a.capital === 'No capital yet' ? 'Land & tax-lien assignments'
-      : a.role === 'Broker' ? 'Brokerage sourcing'
+      a.role === 'Seller' ? 'Land & multifamily disposition'
+      : a.capital === 'No capital yet' ? 'Land & tax-lien assignments → multifamily'
+      : a.role === 'Broker' ? 'Brokerage sourcing — multifamily & land'
       : 'Multifamily acquisitions';
 
     var capital =
@@ -82,7 +86,7 @@
 
     var body =
       a.exp === 'Never'
-        ? 'We open with one market, one buy box and the assignment route — the lowest-capital way to get a first close on the board. The course unlocks phase by phase as you complete each one.'
+        ? 'We open with one market, one buy box and the assignment route — the lowest-capital way to get a first close on the board — with the multifamily underwriting and syndication track wired up behind it for the deal after. The course unlocks phase by phase as you complete each one.'
         : a.exp === '10+'
           ? 'Scoring, hotspots and the deal board come up first; the learning modules stay collapsed. You get the nightly scored queue and the LOI generator, and we stay out of the way.'
           : 'Your sidebar is trimmed to the tools your answers point at, your first market is preloaded and scored, and the rest stays hidden until you need it.';
