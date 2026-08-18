@@ -29,6 +29,25 @@
   var answers = {};
   var submitting = false;
 
+  // Analytics. The survey is the whole funnel on this page, and until now it
+  // reported nothing between the page_view and the lead — a drop-off at
+  // question four looked identical to never scrolling to it. `furthest`
+  // keeps survey_step honest: it fires once per step actually reached, so
+  // Back doesn't inflate the step someone already counted for.
+  var started = false;
+  var furthest = 0;
+
+  // Named sendEvent, not track: `track` is the sliding panel rail a few
+  // lines down.
+  function sendEvent(name, params) {
+    if (window.siteAnalytics) window.siteAnalytics.track(name, params);
+  }
+
+  function stepName(index) {
+    if (index <= LAST_QUESTION) return KEYS[index];
+    return index === RESULT ? 'result' : 'contact';
+  }
+
   var track = root.querySelector('[data-track]');
   var panels = track.querySelectorAll('.panel');
   var stepN = root.querySelector('[data-step-n]');
@@ -133,6 +152,16 @@
   function goTo(next) {
     step = Math.max(0, Math.min(RESULT, next));
     render();
+
+    // goTo only ever runs off a click, so the first one is the start.
+    if (!started) {
+      started = true;
+      sendEvent('survey_start', {});
+    }
+    if (step > furthest) {
+      furthest = step;
+      sendEvent('survey_step', { step_number: step + 1, step_name: stepName(step) });
+    }
   }
 
   /* ── Wiring ───────────────────────────────────────────────────────── */
@@ -160,6 +189,10 @@
     var radios = root.querySelectorAll('input[type="radio"]');
     for (var i = 0; i < radios.length; i++) radios[i].checked = false;
     if (errorBox) errorBox.hidden = true;
+    // A second run through is a second funnel, not a continuation of the
+    // first — let every step count again.
+    furthest = 0;
+    sendEvent('survey_restart', {});
     goTo(0);
   });
 
@@ -175,6 +208,7 @@
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return showError('Please enter a valid work email.');
 
     var d = derive();
+    sendEvent('survey_submit', { lead_track: d.track, lead_plan: d.plan, lead_market: d.market });
     submitting = true;
     submitBtn.disabled = true;
     if (submitMarkup === null) submitMarkup = submitBtn.innerHTML;
@@ -213,10 +247,20 @@
           });
       })
       .then(function () {
+        // GA4's recommended lead event, so it can be marked a key event in
+        // the property without any custom setup. This is the moment the
+        // marketing site has actually done its job.
+        sendEvent('generate_lead', {
+          lead_source: 'fit_survey',
+          lead_track: d.track,
+          lead_plan: d.plan,
+          lead_market: d.market,
+        });
         fillResult();
         goTo(RESULT);
       })
       .catch(function (err) {
+        sendEvent('form_error', { form_id: 'fit_survey' });
         showError(err.message);
       })
       .finally(function () {
