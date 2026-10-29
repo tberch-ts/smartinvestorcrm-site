@@ -88,10 +88,14 @@
       : a.capital === 'No capital yet' ? 'Assignment first — no capital required'
       : 'Balance-sheet buyer';
 
-    var plan =
-      a.exp === '10+' || a.time === 'Full time' ? 'Pro — $79/mo'
-      : a.referral === 'Yes, a whole network' ? 'Pro — $79/mo (referral rewards active)'
-      : 'Free — upgrade when deal two lands';
+    // No longer derived, because there is nothing left to derive: one plan,
+    // one price, and a human decides who gets in. The branches this replaced
+    // sorted people onto Free vs Pro by experience and available time, which
+    // now names two products that are not for sale. The value still travels to
+    // the leads API as `derivedPlan` and to analytics as `lead_plan` -- a
+    // constant there is honest, where a stale price was a quote we would not
+    // honour.
+    var plan = '$1,999/year — by invitation';
 
     var call =
       a.call === 'Yes' ? 'Scheduled — we email times'
