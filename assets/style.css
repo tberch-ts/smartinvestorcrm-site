@@ -1124,6 +1124,18 @@ nav.site .signin:hover {
 .plan.featured {
   box-shadow: inset 0 0 0 1px var(--color-accent), 0 16px 40px rgba(0, 0, 0, 0.55);
 }
+/* One plan. Without this the auto-fit grid stretches a single card the full
+   width of the page, which reads as a banner rather than a price. */
+.plans-single {
+  max-width: 440px;
+  margin: 0 auto;
+}
+.plan-note {
+  margin-top: -4px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-45);
+}
 .plan .badge {
   position: absolute;
   top: -11px;
