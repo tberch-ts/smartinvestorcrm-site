@@ -53,7 +53,7 @@
     <a href="#pricing">Pricing</a>
   </div>
   <a class="signin" data-cta="nav_sign_in" href="https://app.smartinvestorcrm.com/sign-in">Sign in</a>
-  <a class="btn btn-primary" data-cta="nav_start_free" href="#fit">Start free</a>
+  <a class="btn btn-primary" data-cta="nav_request_invite" href="/request-invite/">Request invite</a>
 </nav>
 
 <section class="hero" id="top" data-section="hero">
@@ -68,7 +68,7 @@
       </a>
       <a class="btn btn-secondary btn-lg" data-cta="hero_watch_pipeline" href="#story">Watch the pipeline</a>
     </div>
-    <p class="fineprint">No card. Free plan runs one live deal end to end. Referral rewards on every account you bring.</p>
+    <p class="fineprint">Invitation only. One plan, $1,999 a year. Referral rewards on every account you bring.</p>
   </div>
 
   <div class="markets">
@@ -339,7 +339,7 @@
               <div class="row"><span>Weekly call</span><span data-res-call></span></div>
               <div class="row"><span>Suggested plan</span><span data-res-plan></span></div>
             </div>
-            <a class="btn btn-primary btn-block" data-cta="survey_result_open_workspace" href="https://app.smartinvestorcrm.com/sign-up" style="padding:11px">Open the workspace</a>
+            <a class="btn btn-primary btn-block" data-cta="survey_result_request_invite" href="/request-invite/" style="padding:11px">Request your invite</a>
             <button class="btn btn-secondary btn-block" data-restart style="padding:9px">Start over</button>
           </div>
 
@@ -388,61 +388,42 @@
     <div><p class="fig">6</p><p class="cap">metros scored &middot; 22 markets covered</p></div>
     <div><p class="fig">2,400+</p><p class="cap">census tracts rated 0&ndash;100</p></div>
     <div><p class="fig">10</p><p class="cap">tools on one deal record</p></div>
-    <div><p class="fig">$0</p><p class="cap">to run your first deal end to end</p></div>
+    <div><p class="fig">$1,999</p><p class="cap">a year, one plan, by invitation</p></div>
   </div>
 </section>
 
-<!-- ══ Pricing ═════════════════════════════════════════════════════════ -->
+<!-- ══ Pricing ═══════════════════════════════════════════════════════════ -->
+<!-- ONE PLAN, AND NO BUTTON THAT BUYS IT.
+     There used to be three cards here, one of them free, each with a link
+     anybody could press at 2am. The product is invite-only now: the only
+     route to a checkout is a request somebody approved, which comes back as
+     a quote carrying the link. So the card prices the thing and the CTA
+     asks - a Stripe button beside it would be a button the API refuses. -->
 <section class="section" id="pricing">
   <div class="wrap">
     <div class="kicker">Pricing</div>
-    <h2>Free until a deal is worth paying for.</h2>
-    <p class="dek">Monthly, via Stripe. Cancel from the billing portal and keep every deal, contact and LOI you made.</p>
-    <div class="plans">
-      <div class="plan">
-        <div>
-          <p class="name">Free</p>
-          <p class="price">$0</p>
-          <p class="tagline">One live deal, all the way to signed</p>
-        </div>
-        <ul>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>1 active deal</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Property search &amp; underwriting</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>LOI builder</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Market intel dashboard</li>
-        </ul>
-        <a class="btn btn-secondary btn-block" data-cta="pricing_free_start" data-plan="free" href="#fit">Start free</a>
-      </div>
-
+    <h2>One plan. By invitation.</h2>
+    <p class="dek">$1,999 a year, billed annually via Stripe. Tell us what you are working on and we will send you a quote.</p>
+    <div class="plans plans-single">
       <div class="plan featured">
-        <span class="tag tag-accent badge">Most operators land here</span>
+        <span class="tag tag-accent badge">By invitation</span>
         <div>
-          <p class="name">Pro</p>
-          <p class="price">$79<span class="per">/mo</span></p>
-          <p class="tagline">Unlimited deals, scoring, full pipeline</p>
+          <p class="name">SmartInvestorCRM</p>
+          <p class="price">$1,999<span class="per">/year</span></p>
+          <p class="tagline">The whole platform, one investor</p>
         </div>
         <ul>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Unlimited active deals</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Deal board, scoring engine, hotspots</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Capital raise tracker</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Property search, underwriting &amp; deal scoring</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Deal board, pipeline &amp; the official workflow</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Market intel, hotspots &amp; forecasting</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Mail letters, LOIs &amp; contracts from the app</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Tracked texting from your business number</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Capital raise tracker &amp; investor marketplace</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Syndication A&rarr;Z course</li>
         </ul>
-        <a class="btn btn-primary btn-block" data-cta="pricing_pro_start" href="https://app.smartinvestorcrm.com/sign-up?plan=pro">Start Pro</a>
-      </div>
-
-      <div class="plan">
-        <div>
-          <p class="name">Team</p>
-          <p class="price">$199<span class="per">/mo</span></p>
-          <p class="tagline">Five seats on a shared board</p>
-        </div>
-        <ul>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Everything in Pro</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Up to 5 members per deal</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Shared deal board</li>
-          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg>Collaborative pipeline checklist</li>
-        </ul>
-        <a class="btn btn-secondary btn-block" data-cta="pricing_team_start" href="https://app.smartinvestorcrm.com/sign-up?plan=team">Start Team</a>
+        <a class="btn btn-primary btn-block" data-cta="pricing_request_invite" href="/request-invite/">Request invite</a>
+        <p class="plan-note">We read every request. If it is a fit, you get a quote by email with a link that sets up your account.</p>
       </div>
     </div>
   </div>
@@ -466,7 +447,7 @@
     </details>
     <details>
       <summary>What happens if I cancel?<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round"><use href="#i-chevron"/></svg></summary>
-      <p class="answer">You drop to Free at the end of the period. Deals, contacts and LOIs are preserved — you just lose the Pro surfaces. Deletion only happens if you ask for it.</p>
+      <p class="answer">Your access runs to the end of the year you paid for, then stops. Deals, contacts and LOIs are preserved and exportable — deletion only happens if you ask for it, and you can renew without asking for a new invite.</p>
     </details>
     <details>
       <summary>How is my data secured?<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round"><use href="#i-chevron"/></svg></summary>
