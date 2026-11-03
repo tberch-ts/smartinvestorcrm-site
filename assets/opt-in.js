@@ -71,12 +71,19 @@
             throw new Error((body && body.error) || 'Something went wrong (' + res.status + '). Please try again.');
           });
         }
+        if (window.siteAnalytics) {
+          window.siteAnalytics.track('generate_lead', {
+            lead_source: 'sell_your_land',
+            sms_consent: consent,
+          });
+        }
         form.hidden = true;
         doneBox.hidden = false;
         // Only promise texts to someone who actually opted in.
         document.getElementById('done-sms').hidden = !consent;
       })
       .catch(function (err) {
+        if (window.siteAnalytics) window.siteAnalytics.track('form_error', { form_id: 'sell_your_land' });
         showError(err.message);
         submitBtn.disabled = false;
         submitBtn.textContent = 'Get my cash offer';

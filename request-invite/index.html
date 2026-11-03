@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HCDBNDE96X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-HCDBNDE96X');
+  </script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Request an invite — SmartInvestorCRM</title>
+<meta name="description" content="SmartInvestorCRM is invitation only. Tell us what you are working on and we will send you a quote for $1,999 a year with a link that sets up your account." />
+<!-- Not indexed: the page is for people who followed the pricing card, and a
+     search result for "SmartInvestorCRM signup" landing here would collect
+     requests from people who never read the price. -->
+<meta name="robots" content="noindex, follow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="/assets/style.css" />
+<style>
+  /* Page-local only. Everything structural comes from the shared sheet so
+     this form cannot drift from the rest of the site's typography. */
+  .ri-wrap { max-width: 620px; margin: 0 auto; padding: 0 20px 80px; }
+  .ri-form {
+    display: flex; flex-direction: column; gap: 16px;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: 26px;
+    box-shadow: var(--shadow-sm);
+  }
+  .ri-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { .ri-row { grid-template-columns: 1fr; } }
+  .ri-hint { font-size: 12.5px; color: var(--text-45); margin: 4px 0 0; }
+  .ri-note { font-size: 13px; color: var(--text-45); line-height: 1.6; }
+  textarea.input { min-height: 110px; resize: vertical; font: inherit; }
+  /* The honeypot. Positioned off-screen rather than display:none, because the
+     bots worth catching skip hidden inputs — see the marketing API's
+     honeypot.ts, which also explains why the field is named wb_ref2 and not
+     something a saved browser profile knows how to autofill. */
+  .ri-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .ri-error {
+    font-size: 13.5px; color: #fca5a5;
+    background: rgba(248, 113, 113, 0.08);
+    border-radius: var(--radius-md); padding: 10px 12px;
+  }
+  .ri-done { text-align: center; padding: 40px 0; }
+  .ri-done h2 { font-size: 26px; margin: 0 0 10px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-building"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></g>
+    <g id="i-check"><path d="M20 6L9 17l-5-5"/></g>
+  </defs>
+</svg>
+
+<nav class="site">
+  <a class="brand" href="/">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-building"/></svg>
+    SmartInvestorCRM
+  </a>
+  <div class="links">
+    <a href="/#tools">The desk</a>
+    <a href="/#pricing">Pricing</a>
+    <a href="/#faq">FAQ</a>
+  </div>
+  <a class="signin" data-cta="nav_sign_in" href="https://app.smartinvestorcrm.com/sign-in">Sign in</a>
+</nav>
+
+<section class="section">
+  <div class="ri-wrap">
+    <div class="kicker">Request an invite</div>
+    <h1 style="font-size:clamp(30px,4vw,44px);letter-spacing:-.03em;margin:8px 0 10px">
+      Tell us what you are working on.
+    </h1>
+    <p class="ri-note" style="margin:0 0 22px">
+      SmartInvestorCRM is one plan at <strong>$1,999 a year</strong>, and it is invitation only.
+      We read every request. If it is a fit you will get a quote by email with a link that sets
+      up your account &mdash; usually within a business day. Nothing is charged until you follow it.
+    </p>
+
+    <div id="done" class="ri-done" hidden>
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-check"/></svg>
+      <h2>Request received</h2>
+      <p class="ri-note">
+        We will email <span id="done-email"></span> once somebody has read it. If it is a fit,
+        that email carries the quote and the link that sets up your account.
+      </p>
+      <p style="margin-top:22px"><a class="btn btn-secondary" href="/">Back to the site</a></p>
+    </div>
+
+    <form id="form" class="ri-form" novalidate>
+      <div class="ri-row">
+        <div class="field">
+          <label class="lbl" for="name">Your name</label>
+          <input class="input" id="name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label class="lbl" for="email">Email</label>
+          <input class="input" id="email" name="email" type="email" autocomplete="email" required />
+          <p class="ri-hint">The quote and the account link both go here.</p>
+        </div>
+      </div>
+
+      <div class="ri-row">
+        <div class="field">
+          <label class="lbl" for="company">Company <span style="font-weight:400;opacity:.6">(optional)</span></label>
+          <input class="input" id="company" name="company" type="text" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label class="lbl" for="phone">Phone <span style="font-weight:400;opacity:.6">(optional)</span></label>
+          <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="markets">Which markets are you buying in?</label>
+        <input class="input" id="markets" name="markets" type="text" placeholder="Cedar Rapids, Tampa, Raleigh&hellip;" />
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="dealVolume">How many deals did you close last year?</label>
+        <input class="input" id="dealVolume" name="dealVolume" type="text" placeholder="None yet / 2 / 15+" />
+        <p class="ri-hint">&ldquo;None yet&rdquo; is a real answer and not a disqualifier.</p>
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="message">What are you trying to do with it?</label>
+        <textarea class="input" id="message" name="message" placeholder="The deal you are working now, or the one you keep losing."></textarea>
+      </div>
+
+      <!-- See .ri-trap above. -->
+      <div class="ri-trap" aria-hidden="true">
+        <label for="wb_ref2">Leave this field empty</label>
+        <input id="wb_ref2" name="wb_ref2" type="text" tabindex="-1" autocomplete="nope" />
+      </div>
+
+      <div id="error" class="ri-error" hidden></div>
+
+      <button class="btn btn-primary btn-block" id="submit" type="submit" style="padding:12px">
+        Request an invite
+      </button>
+
+      <p class="ri-hint" style="text-align:center">
+        We will only use this to answer you. <a href="/privacy">Privacy</a>.
+      </p>
+    </form>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="inner">
+    <div class="brand">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-building"/></svg>
+      SmartInvestorCRM
+    </div>
+    <div class="links">
+      <a href="https://app.smartinvestorcrm.com/sign-in">Sign in</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+    </div>
+    <p class="legal">
+      &copy; <span id="year">2026</span> SmartInvestorCRM, a product of <span data-business-name>Talk Studio LLC</span>
+      &middot; Payments via Stripe &middot; Auth via Firebase.
+    </p>
+  </div>
+</footer>
+
+<script src="/assets/config.js"></script>
+<script src="/assets/request-invite.js"></script>
+</body>
+</html>

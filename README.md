@@ -12,16 +12,33 @@ repo, and only what genuinely has to be world-readable lives here.
 |---|---|
 | `index.html` | Marketing landing page |
 | `sell-your-land/index.html` | **Public SMS opt-in / consent page** — the "proof of consent" URL for Twilio toll-free verification, and the messaging terms & privacy page |
+| `request-invite/index.html` | **Request an invite** — the only way in. The product is one plan at $1,999/year and invitation only, so the pricing card links here instead of to a checkout |
 | `assets/style.css` | All styling — the Nocturne token sheet plus the page's own classes (no framework, no build step) |
 | `assets/config.js` | Business name, contact details, API URL — **the only file you normally edit** |
 | `assets/story.js` | The scroll-driven four-act pipeline animation on the landing page |
 | `assets/survey.js` | The "Find your fit" survey — seven steps, derived result, `POST /api/leads` |
 | `assets/opt-in.js` | Opt-in form logic |
+| `assets/request-invite.js` | The invite-request form. Posts to the **marketing CRM** (`crmApiUrl`), not to `apiUrl` — an invite request is a sales decision somebody reads, so it lands beside every other one. Approving it there emails the applicant a quote with the link that sets up the account |
+| `assets/analytics.js` | GA4 events — names every CTA and every step of the survey, so the hand-off into the app isn't one undifferentiated number |
 | `404.html` | Not-found page |
 | `CNAME` | Custom domain for GitHub Pages |
 
 There is **no build step**. Edit the HTML/CSS/JS, commit, push — Pages serves
 the files as-is.
+
+## Analytics
+
+Every page carries the GA4 tag (`G-HCDBNDE96X`, the same property as the app).
+`assets/analytics.js` turns clicks into named events: any CTA with a
+`data-cta="<id>"` attribute is reported as `sign_up_start`, `sign_in_start` or
+`cta_click` with that id and the section it sits in attached, and the survey
+reports its own funnel (`survey_start`, `survey_step`, `generate_lead`).
+
+**Adding a CTA?** Give it a `data-cta` id or it won't be distinguishable from
+every other link on the page. Custom parameters (`cta_id`, `cta_section`,
+`plan`, `lead_source`) are collected but not reportable until they're
+registered as custom dimensions in the GA4 property — Admin → Custom
+definitions. The full event reference lives with the app docs.
 
 ## What must NOT go in here
 

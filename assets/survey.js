@@ -29,6 +29,25 @@
   var answers = {};
   var submitting = false;
 
+  // Analytics. The survey is the whole funnel on this page, and until now it
+  // reported nothing between the page_view and the lead — a drop-off at
+  // question four looked identical to never scrolling to it. `furthest`
+  // keeps survey_step honest: it fires once per step actually reached, so
+  // Back doesn't inflate the step someone already counted for.
+  var started = false;
+  var furthest = 0;
+
+  // Named sendEvent, not track: `track` is the sliding panel rail a few
+  // lines down.
+  function sendEvent(name, params) {
+    if (window.siteAnalytics) window.siteAnalytics.track(name, params);
+  }
+
+  function stepName(index) {
+    if (index <= LAST_QUESTION) return KEYS[index];
+    return index === RESULT ? 'result' : 'contact';
+  }
+
   var track = root.querySelector('[data-track]');
   var panels = track.querySelectorAll('.panel');
   var stepN = root.querySelector('[data-step-n]');
@@ -53,10 +72,14 @@
      The payoff panel, and the shape of the account we go on to create. */
   function derive() {
     var a = answers;
+    // Multifamily is the core asset class here — unit count, cap rate, DSCR,
+    // LP capital, the syndication course. Land and tax liens are the
+    // low-capital on-ramp to it, not a separate destination, so every track
+    // names multifamily instead of leaving it to the funded-buyer branch.
     var track_ =
-      a.role === 'Seller' ? 'Land disposition'
-      : a.capital === 'No capital yet' ? 'Land & tax-lien assignments'
-      : a.role === 'Broker' ? 'Brokerage sourcing'
+      a.role === 'Seller' ? 'Land & multifamily disposition'
+      : a.capital === 'No capital yet' ? 'Land & tax-lien assignments → multifamily'
+      : a.role === 'Broker' ? 'Brokerage sourcing — multifamily & land'
       : 'Multifamily acquisitions';
 
     var capital =
@@ -65,10 +88,14 @@
       : a.capital === 'No capital yet' ? 'Assignment first — no capital required'
       : 'Balance-sheet buyer';
 
-    var plan =
-      a.exp === '10+' || a.time === 'Full time' ? 'Pro — $79/mo'
-      : a.referral === 'Yes, a whole network' ? 'Pro — $79/mo (referral rewards active)'
-      : 'Free — upgrade when deal two lands';
+    // No longer derived, because there is nothing left to derive: one plan,
+    // one price, and a human decides who gets in. The branches this replaced
+    // sorted people onto Free vs Pro by experience and available time, which
+    // now names two products that are not for sale. The value still travels to
+    // the leads API as `derivedPlan` and to analytics as `lead_plan` -- a
+    // constant there is honest, where a stale price was a quote we would not
+    // honour.
+    var plan = '$1,999/year — by invitation';
 
     var call =
       a.call === 'Yes' ? 'Scheduled — we email times'
@@ -82,7 +109,7 @@
 
     var body =
       a.exp === 'Never'
-        ? 'We open with one market, one buy box and the assignment route — the lowest-capital way to get a first close on the board. The course unlocks phase by phase as you complete each one.'
+        ? 'We open with one market, one buy box and the assignment route — the lowest-capital way to get a first close on the board — with the multifamily underwriting and syndication track wired up behind it for the deal after. The course unlocks phase by phase as you complete each one.'
         : a.exp === '10+'
           ? 'Scoring, hotspots and the deal board come up first; the learning modules stay collapsed. You get the nightly scored queue and the LOI generator, and we stay out of the way.'
           : 'Your sidebar is trimmed to the tools your answers point at, your first market is preloaded and scored, and the rest stays hidden until you need it.';
@@ -133,6 +160,16 @@
   function goTo(next) {
     step = Math.max(0, Math.min(RESULT, next));
     render();
+
+    // goTo only ever runs off a click, so the first one is the start.
+    if (!started) {
+      started = true;
+      sendEvent('survey_start', {});
+    }
+    if (step > furthest) {
+      furthest = step;
+      sendEvent('survey_step', { step_number: step + 1, step_name: stepName(step) });
+    }
   }
 
   /* ── Wiring ───────────────────────────────────────────────────────── */
@@ -160,6 +197,10 @@
     var radios = root.querySelectorAll('input[type="radio"]');
     for (var i = 0; i < radios.length; i++) radios[i].checked = false;
     if (errorBox) errorBox.hidden = true;
+    // A second run through is a second funnel, not a continuation of the
+    // first — let every step count again.
+    furthest = 0;
+    sendEvent('survey_restart', {});
     goTo(0);
   });
 
@@ -175,6 +216,7 @@
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return showError('Please enter a valid work email.');
 
     var d = derive();
+    sendEvent('survey_submit', { lead_track: d.track, lead_plan: d.plan, lead_market: d.market });
     submitting = true;
     submitBtn.disabled = true;
     if (submitMarkup === null) submitMarkup = submitBtn.innerHTML;
@@ -213,10 +255,20 @@
           });
       })
       .then(function () {
+        // GA4's recommended lead event, so it can be marked a key event in
+        // the property without any custom setup. This is the moment the
+        // marketing site has actually done its job.
+        sendEvent('generate_lead', {
+          lead_source: 'fit_survey',
+          lead_track: d.track,
+          lead_plan: d.plan,
+          lead_market: d.market,
+        });
         fillResult();
         goTo(RESULT);
       })
       .catch(function (err) {
+        sendEvent('form_error', { form_id: 'fit_survey' });
         showError(err.message);
       })
       .finally(function () {

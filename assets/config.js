@@ -15,4 +15,11 @@ window.SITE_CONFIG = {
   // Where the opt-in POST goes. This is the public API only — nothing
   // operational lives in this repo.
   apiUrl: 'https://mfa-api.fly.dev',
+
+  // Where "Request an invite" posts. A DIFFERENT service on purpose: an
+  // invite request is a sales decision somebody reads and acts on, so it
+  // lands in the marketing CRM beside every other one, and the approval
+  // there is what mints the invite in the app. Pointing this at `apiUrl`
+  // above 404s in a way that reads to a visitor as a broken form.
+  crmApiUrl: 'https://marketing-api.fly.dev',
 };
